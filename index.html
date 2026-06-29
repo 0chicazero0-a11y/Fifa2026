@@ -1,0 +1,1115 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cuadro de Desarrollo - Quiniela</title>
+    <style>
+      :root {
+        --bg-color: #0b1528;
+        --card-bg: #13223f;
+        --gold: #d4af37;
+        --text: #ffffff;
+        --border: #1e355e;
+      }
+
+      body {
+        margin: 0;
+        padding: 20px;
+        background-color: var(--bg-color);
+        color: var(--text);
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        height: 100vh; /* Ocupa exactamente el alto de la pantalla */
+        box-sizing: border-box;
+        overflow: hidden; /* Evita que TODA la página haga scroll extraño */
+      }
+
+      /* 1. EL CONTENEDOR MAESTRO (Une fases y barra lateral lado a lado) */
+      .main-layout {
+        display: flex !important;
+        flex-direction: row !important; /* Fuerza la alineación horizontal */
+        width: 100%;
+        height: 100%;
+        gap: 20px;
+        box-sizing: border-box;
+      }
+
+      /* 2. EL CONTENEDOR DE FASES (Permite el scroll horizontal de las columnas) */
+      .container {
+        flex: 3;
+        background-color: rgba(19, 34, 63, 0.2);
+        padding: 15px;
+        border-radius: 10px;
+        border: 1px solid var(--border);
+
+        display: flex !important;
+        flex-direction: row !important; /* Pone una columna de fase al lado de la otra */
+        gap: 20px !important;
+        overflow-x: auto !important; /* Activa el scroll horizontal aquí */
+        overflow-y: hidden !important; /* Cancela el scroll vertical general */
+        height: 100%;
+        box-sizing: border-box;
+      }
+
+      /* 3. LAS COLUMNAS DE CADA FASE (16avos, Octavos, etc.) */
+      .phase-column {
+        display: flex !important;
+        flex-direction: column !important; /* Los partidos dentro de la columna van hacia abajo */
+        min-width: 240px !important; /* Ancho fijo para que no se aplasten las tarjetas */
+        max-width: 240px !important;
+        height: 100% !important;
+        overflow-y: auto !important; /* Cada columna se desplaza verticalmente por separado */
+        box-sizing: border-box;
+        padding-right: 5px; /* Espacio sutil para la barra de scroll */
+      }
+
+      /* Los títulos h3 fijos arriba de cada columna al scrollear */
+      .phase-column h3 {
+        text-align: center;
+        color: var(--gold);
+        font-size: 14px;
+        letter-spacing: 1px;
+        margin: 0 0 15px 0;
+        padding: 10px 0;
+        position: sticky;
+        top: 0;
+        background-color: var(--bg-color); /* Tapa las tarjetas que suben */
+        z-index: 10;
+      }
+
+      /* 4. PANEL LATERAL (Tabla de posiciones fija a la derecha) */
+      .sidebar {
+        flex: 1;
+        background-color: var(--card-bg);
+        border: 2px solid var(--gold);
+        border-radius: 10px;
+        padding: 20px;
+        min-width: 300px;
+        max-width: 340px;
+        height: 100%; /* Se acopla a la altura de la pantalla */
+        overflow-y: auto; /* Permite scroll vertical si la tabla es muy larga */
+        box-sizing: border-box;
+      }
+
+      .sidebar h2 {
+        color: var(--gold);
+        margin-top: 0;
+        text-align: center;
+        font-size: 18px;
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 10px;
+      }
+
+      /* 5. TARJETAS DE PARTIDO (Matchups) */
+      .matchup {
+        display: flex;
+        flex-direction: column;
+        background: var(--card-bg);
+        border: 2px solid var(--border);
+        border-radius: 8px;
+        width: 100%; /* Se adapta al ancho de la columna .phase-column */
+        padding: 12px;
+        box-sizing: border-box;
+        margin-bottom: 5px; /* Separación sutil hacia abajo */
+      }
+
+      .teams-versus {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: space-around !important;
+        align-items: center !important;
+        margin-bottom: 12px;
+      }
+
+      .team-item {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+        width: 70px;
+      }
+
+      .team-flag {
+        font-size: 32px !important;
+        display: block !important;
+        margin-bottom: 4px !important;
+        line-height: 1;
+      }
+
+      .vs-divider {
+        font-size: 14px !important;
+        color: var(--gold) !important;
+        font-weight: bold !important;
+        align-self: center !important;
+      }
+
+      .matchup-footer {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 6px !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding-top: 8px;
+        width: 100%;
+      }
+
+      .matchup-footer select {
+        background: #0f172a;
+        color: white;
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 4px 12px;
+        cursor: pointer;
+        text-align: center;
+        width: 110px;
+      }
+
+      .matchup-header {
+        text-align: center;
+        font-size: 10px;
+        color: var(--gold);
+        font-weight: bold;
+        letter-spacing: 1px;
+        margin-bottom: 8px;
+        opacity: 0.8;
+      }
+
+      .matchup-footer span {
+        font-size: 11px !important;
+        color: #94a3b8 !important;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .team-name {
+        font-size: 13px !important;
+        font-weight: bold !important;
+        color: #ffffff !important;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+      }
+
+      th,
+      td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid var(--border);
+      }
+
+      th {
+        color: #8a9cb4;
+        font-size: 12px;
+        text-transform: uppercase;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main-layout">
+      <div class="container">
+        <div class="phase-column">
+          <h3>16AVOS</h3>
+          <div
+            id="contenedor-16avos"
+            style="display: flex; flex-direction: column; gap: 15px"
+          ></div>
+        </div>
+        <div class="phase-column">
+          <h3>OCTAVOS</h3>
+          <div
+            id="contenedor-octavos"
+            style="display: flex; flex-direction: column; gap: 15px"
+          ></div>
+        </div>
+        <div class="phase-column">
+          <h3>CUARTOS</h3>
+          <div
+            id="contenedor-cuartos"
+            style="display: flex; flex-direction: column; gap: 15px"
+          ></div>
+        </div>
+        <div class="phase-column">
+          <h3>SEMIFINAL</h3>
+          <div
+            id="contenedor-semis"
+            style="display: flex; flex-direction: column; gap: 15px"
+          ></div>
+        </div>
+        <div class="phase-column">
+          <h3>FINAL</h3>
+          <div
+            id="contenedor-final"
+            style="display: flex; flex-direction: column; gap: 15px"
+          ></div>
+        </div>
+      </div>
+
+      <div class="sidebar">
+        <h2>TABLA DE PUNTOS</h2>
+
+        <div
+          style="
+            font-size: 13px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            border-radius: 5px;
+          "
+        >
+          <strong>Pronósticos cargados:</strong><br />
+          • <strong>Nico 💢:</strong> P1: por definir, P2: por definir<br />
+          • <strong>Alvy 👻:</strong> P1: por definir, P2: por definir<br />
+          • <strong>Alfy 🐷:</strong> P1: por definir, P2: por definir<br />
+          • <strong>Oskar 😭:</strong> P1: por definir, P2: por definir<br />
+          • <strong>Kyo 🐝:</strong> P1: por definir, P2: por definir<br />
+          • <strong>Mary 🌵:</strong> P1: por definir, P2: por definir<br />
+          • <strong>Gera 🐱:</strong> P1: por definir, P2: por definir<br />
+          • <strong>Gui ☕️ :</strong> P1: por definir, P2: por definir
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Amigo</th>
+              <th style="text-align: right">Pts</th>
+            </tr>
+          </thead>
+          <tbody id="tabla-puntuaciones">
+            <tr>
+              <td>Nico 💢</td>
+              <td style="text-align: right" id="pts-Nico">0</td>
+            </tr>
+            <tr>
+              <td>Alvy 👻</td>
+              <td style="text-align: right" id="pts-Alvy">0</td>
+            </tr>
+            <tr>
+              <td>Alfy 🐷</td>
+              <td style="text-align: right" id="pts-Alfy">0</td>
+            </tr>
+            <tr>
+              <td>Oskar 😭</td>
+              <td style="text-align: right" id="pts-Oskar">0</td>
+            </tr>
+            <tr>
+              <td>Kyo 🐝</td>
+              <td style="text-align: right" id="pts-Kyo">0</td>
+            </tr>
+            <tr>
+              <td>Mary 🌵</td>
+              <td style="text-align: right" id="pts-Mary">0</td>
+            </tr>
+            <tr>
+              <td>Gera 🐱</td>
+              <td style="text-align: right" id="pts-Gera">0</td>
+            </tr>
+            <tr>
+              <td>Gui ☕</td>
+              <td style="text-align: right" id="pts-Gui">0</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <script>
+      // 1. EL SEEDER (Base de datos unificada de los 31 partidos)
+      const partidosMundial = [
+        {
+          id: "p1",
+          numero: 1,
+          fase: "16avos",
+          t1: "ALE",
+          f1: "🇩🇪",
+          t2: "PAR",
+          f2: "🇵🇾",
+          ganador: "TBD",
+        },
+        {
+          id: "p2",
+          numero: 2,
+          fase: "16avos",
+          t1: "FRA",
+          f1: "🇫🇷",
+          t2: "SWE",
+          f2: "🇸🇪",
+          ganador: "TBD",
+        },
+        {
+          id: "p3",
+          numero: 3,
+          fase: "16avos",
+          t1: "RSA",
+          f1: "🇿🇦",
+          t2: "CAN",
+          f2: "🇨🇦",
+          ganador: "CAN",
+        },
+        {
+          id: "p4",
+          numero: 4,
+          fase: "16avos",
+          t1: "NED",
+          f1: "🇳🇱",
+          t2: "MAR",
+          f2: "🇲🇦",
+          ganador: "TBD",
+        },
+        {
+          id: "p5",
+          numero: 5,
+          fase: "16avos",
+          t1: "POR",
+          f1: "🇵🇹",
+          t2: "CRO",
+          f2: "🇭🇷",
+          ganador: "TBD",
+        },
+        {
+          id: "p6",
+          numero: 6,
+          fase: "16avos",
+          t1: "ESP",
+          f1: "🇪🇸",
+          t2: "AUT",
+          f2: "🇦🇹",
+          ganador: "TBD",
+        },
+        {
+          id: "p7",
+          numero: 7,
+          fase: "16avos",
+          t1: "USA",
+          f1: "🇺🇸",
+          t2: "BIH",
+          f2: "🇧🇦",
+          ganador: "TBD",
+        },
+        {
+          id: "p8",
+          numero: 8,
+          fase: "16avos",
+          t1: "BEL",
+          f1: "🇧🇪",
+          t2: "SEN",
+          f2: "🇸🇳",
+          ganador: "TBD",
+        },
+        {
+          id: "p9",
+          numero: 9,
+          fase: "16avos",
+          t1: "BRA",
+          f1: "🇧🇷",
+          t2: "JPN",
+          f2: "🇯🇵",
+          ganador: "TBD",
+        },
+        {
+          id: "p10",
+          numero: 10,
+          fase: "16avos",
+          t1: "CIV",
+          f1: "🇨🇮",
+          t2: "NOR",
+          f2: "🇳🇴",
+          ganador: "TBD",
+        },
+        {
+          id: "p11",
+          numero: 11,
+          fase: "16avos",
+          t1: "MEX",
+          f1: "🇲🇽",
+          t2: "ECU",
+          f2: "🇪🇨",
+          ganador: "TBD",
+        },
+        {
+          id: "p12",
+          numero: 12,
+          fase: "16avos",
+          t1: "ENG",
+          f1: "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+          t2: "COD",
+          f2: "🇨🇩",
+          ganador: "TBD",
+        },
+        {
+          id: "p13",
+          numero: 13,
+          fase: "16avos",
+          t1: "ARG",
+          f1: "🇦🇷",
+          t2: "CPV",
+          f2: "🇨🇻",
+          ganador: "TBD",
+        },
+        {
+          id: "p14",
+          numero: 14,
+          fase: "16avos",
+          t1: "AUS",
+          f1: "🇦🇺",
+          t2: "EGY",
+          f2: "🇪🇬",
+          ganador: "TBD",
+        },
+        {
+          id: "p15",
+          numero: 15,
+          fase: "16avos",
+          t1: "SUI",
+          f1: "🇨🇭",
+          t2: "ALG",
+          f2: "🇩🇿",
+          ganador: "TBD",
+        },
+        {
+          id: "p16",
+          numero: 16,
+          fase: "16avos",
+          t1: "COL",
+          f1: "🇨🇴",
+          t2: "GHA",
+          f2: "🇬🇭",
+          ganador: "TBD",
+        },
+
+        {
+          id: "p17",
+          numero: 17,
+          fase: "octavos",
+          t1: "G1",
+          f1: "❓",
+          t2: "G2",
+          f2: "❓",
+          ganador: "TBD",
+        },
+        {
+          id: "p18",
+          numero: 18,
+          fase: "octavos",
+          t1: "G3",
+          f1: "❓",
+          t2: "G4",
+          f2: "❓",
+          ganador: "TBD",
+        },
+        {
+          id: "p19",
+          numero: 19,
+          fase: "octavos",
+          t1: "G5",
+          f1: "❓",
+          t2: "G6",
+          f2: "❓",
+          ganador: "TBD",
+        },
+        {
+          id: "p20",
+          numero: 20,
+          fase: "octavos",
+          t1: "G7",
+          f1: "❓",
+          t2: "G8",
+          f2: "❓",
+          ganador: "TBD",
+        },
+        {
+          id: "p21",
+          numero: 21,
+          fase: "octavos",
+          t1: "G9",
+          f1: "❓",
+          t2: "G10",
+          f2: "❓",
+          ganador: "TBD",
+        },
+        {
+          id: "p22",
+          numero: 22,
+          fase: "octavos",
+          t1: "G11",
+          f1: "❓",
+          t2: "G12",
+          f2: "❓",
+          ganador: "TBD",
+        },
+        {
+          id: "p23",
+          numero: 23,
+          fase: "octavos",
+          t1: "G13",
+          f1: "❓",
+          t2: "G14",
+          f2: "❓",
+          ganador: "TBD",
+        },
+        {
+          id: "p24",
+          numero: 24,
+          fase: "octavos",
+          t1: "G15",
+          f1: "❓",
+          t2: "G16",
+          f2: "❓",
+          ganador: "TBD",
+        },
+
+        {
+          id: "p25",
+          numero: 25,
+          fase: "cuartos",
+          t1: "G17",
+          f1: "❓",
+          t2: "G18",
+          f2: "❓",
+          ganador: "TBD",
+        },
+        {
+          id: "p26",
+          numero: 26,
+          fase: "cuartos",
+          t1: "G19",
+          f1: "❓",
+          t2: "G20",
+          f2: "❓",
+          ganador: "TBD",
+        },
+        {
+          id: "p27",
+          numero: 27,
+          fase: "cuartos",
+          t1: "G21",
+          f1: "❓",
+          t2: "G22",
+          f2: "❓",
+          ganador: "TBD",
+        },
+        {
+          id: "p28",
+          numero: 28,
+          fase: "cuartos",
+          t1: "G23",
+          f1: "❓",
+          t2: "G24",
+          f2: "❓",
+          ganador: "TBD",
+        },
+
+        {
+          id: "p29",
+          numero: 29,
+          fase: "semis",
+          t1: "G25",
+          f1: "❓",
+          t2: "G26",
+          f2: "❓",
+          ganador: "TBD",
+        },
+        {
+          id: "p30",
+          numero: 30,
+          fase: "semis",
+          t1: "G27",
+          f1: "❓",
+          t2: "G28",
+          f2: "❓",
+          ganador: "TBD",
+        },
+
+        {
+          id: "p31",
+          numero: 31,
+          fase: "final",
+          t1: "G29",
+          f1: "❓",
+          t2: "G30",
+          f2: "❓",
+          ganador: "TBD",
+        },
+      ];
+
+      // Diccionario global para recuperar las banderas basándonos en las iniciales de los países elegidos
+      const mapaBanderas = {};
+      partidosMundial.forEach((p) => {
+        if (p.fase === "16avos") {
+          mapaBanderas[p.t1] = p.f1;
+          mapaBanderas[p.t2] = p.f2;
+        }
+      });
+
+      // const pronosticos = {
+      //   Nico: { p1: "por definir", p2: "por definir" },
+      //   Alvy: { p1: "por definir", p2: "por definir" },
+      //   Alfy: { p1: "por definir", p2: "por definir" },
+      //   Oskar: { p1: "por definir", p2: "por definir" },
+      //   Kyo: { p1: "por definir", p2: "por definir" },
+      //   Mary: { p1: "por definir", p2: "por definir" },
+      //   Gera: { p1: "por definir", p2: "por definir" },
+      //   Gui: { p1: "por definir", p2: "por definir" },
+      // };
+
+      const pronosticos = {
+        Nico: {
+          p1: "ALE",
+          p2: "FRA",
+          p3: "CAN",
+          p4: "NED",
+          p5: "POR",
+          p6: "ESP",
+          p7: "USA",
+          p8: "SEN",
+          p9: "BRA",
+          p10: "NOR",
+          p11: "MEX",
+          p12: "ENG",
+          p13: "ARG",
+          p14: "EGY",
+          p15: "SUI",
+          p16: "COL", // ... 16avos
+          p17: "ALE",
+          p18: "NED",
+          p19: "POR",
+          p20: "USA",
+          p21: "JAP",
+          p22: "MEX",
+          p23: "ARG",
+          p24: "SUI", // ... Octavos (usas el país que creen que ganará)
+          p25: "ALE",
+          p26: "USA",
+          p27: "JAP",
+          p28: "ARG", //... Cuartos
+          p29: "ALE",
+          p30: "ARG", //... Semis
+          p31: "ARG", //...Final
+          // y así sucesivamente hasta la final (p31)
+        },
+        Alvy: {
+          p1: "ALE",
+          p2: "SUI",
+          p3: "RSA",
+          p4: "NED",
+          p5: "POR",
+          p6: "ESP",
+          p7: "USA",
+          p8: "SEN",
+          p9: "BRA",
+          p10: "NOR",
+          p11: "ECU",
+          p12: "ENG",
+          p13: "ARG",
+          p14: "AUS",
+          p15: "ALG",
+          p16: "COL", // ... 16avos
+          p17: "ALE",
+          p18: "RSA",
+          p19: "ESP",
+          p20: "USA",
+          p21: "JAP",
+          p22: "ECU",
+          p23: "AUS",
+          p24: "COL", // ... Octavos (usas el país que creen que ganará)
+          p25: "ALE",
+          p26: "USA",
+          p27: "JAP",
+          p28: "AUS", //... Cuartos
+          p29: "USA",
+          p30: "JAP", //... Semis
+          p31: "USA", //...Final
+          // y así sucesivamente hasta la final (p31)
+        },
+        Alfy: {
+          p1: "ALE",
+          p2: "FRA",
+          p3: "CAN",
+          p4: "NED",
+          p5: "POR",
+          p6: "ESP",
+          p7: "USA",
+          p8: "SEN",
+          p9: "BRA",
+          p10: "NOR",
+          p11: "MEX",
+          p12: "ENG",
+          p13: "ARG",
+          p14: "EGY",
+          p15: "ALG",
+          p16: "COL", // 16avos
+
+          p17: "FRA",
+          p18: "NED",
+          p19: "ESP",
+          p20: "USA",
+          p21: "BRA",
+          p22: "MEX",
+          p23: "ARG",
+          p24: "COL", // Octavos
+
+          p25: "FRA",
+          p26: "ESP",
+          p27: "MEX",
+          p28: "ARG", // Cuartos
+
+          p29: "ESP",
+          p30: "ARG", // Semis
+
+          p31: "ARG", // Final
+        },
+        Oscar: {
+          p1: "ALE",
+          p2: "FRA",
+          p3: "CAN",
+          p4: "NED",
+          p5: "POR",
+          p6: "ESP",
+          p7: "USA",
+          p8: "BEL",
+          p9: "BRA",
+          p10: "NOR",
+          p11: "MEX",
+          p12: "COD",
+          p13: "ARG",
+          p14: "AUS",
+          p15: "SUI",
+          p16: "COL", // 16avos
+
+          p17: "FRA",
+          p18: "NED",
+          p19: "ESP",
+          p20: "BEL",
+          p21: "BRA",
+          p22: "COD",
+          p23: "ARG",
+          p24: "COL", // Octavos
+
+          p25: "FRA",
+          p26: "ESP",
+          p27: "BRA",
+          p28: "COL", // Cuartos
+
+          p29: "FRA",
+          p30: "BRA", // Semis
+
+          p31: "FRA", // Final
+        },
+        Kyo: {
+          p1: "ALE",
+          p2: "SWE",
+          p3: "CAN",
+          p4: "MAR",
+          p5: "POR",
+          p6: "AUT",
+          p7: "USA",
+          p8: "BEL",
+          p9: "JAP",
+          p10: "NOR",
+          p11: "MEX",
+          p12: "COD",
+          p13: "ARG",
+          p14: "EGY",
+          p15: "SUI",
+          p16: "COL", // 16avos
+
+          p17: "ALE",
+          p18: "CAN",
+          p19: "POR",
+          p20: "USA",
+          p21: "JAP",
+          p22: "MEX",
+          p23: "ARG",
+          p24: "SUI", // Octavos
+
+          p25: "ALE",
+          p26: "POR",
+          p27: "JAP",
+          p28: "ARG", // Cuartos
+
+          p29: "POR",
+          p30: "JAP", // Semis
+
+          p31: "JAP", // Final
+        },
+        Mary: {
+          p1: "ALE",
+          p2: "FRA",
+          p3: "CAN",
+          p4: "NED",
+          p5: "POR",
+          p6: "ESP",
+          p7: "USA",
+          p8: "SEN",
+          p9: "JAP",
+          p10: "NOR",
+          p11: "MEX",
+          p12: "ENG",
+          p13: "ARG",
+          p14: "EGY",
+          p15: "SUI",
+          p16: "COL", // 16avos
+
+          p17: "FRA",
+          p18: "NED",
+          p19: "POR",
+          p20: "SEN",
+          p21: "NOR",
+          p22: "ENG",
+          p23: "ARG",
+          p24: "COL", // Octavos
+
+          p25: "FRA",
+          p26: "POR",
+          p27: "NOR",
+          p28: "COL", // Cuartos
+
+          p29: "FRA",
+          p30: "NOR", // Semis
+
+          p31: "FRA", // Final
+        },
+        Gera: {
+          p1: "ALE",
+          p2: "FRA",
+          p3: "CAN",
+          p4: "MAR",
+          p5: "CRO",
+          p6: "ESP",
+          p7: "USA",
+          p8: "BEL",
+          p9: "BRA",
+          p10: "NOR",
+          p11: "ECU",
+          p12: "ENG",
+          p13: "ARG",
+          p14: "AUS",
+          p15: "SUI",
+          p16: "COL", // 16avos
+
+          p17: "ALE",
+          p18: "TBD",
+          p19: "CRO",
+          p20: "BEL",
+          p21: "BRA",
+          p22: "ECU",
+          p23: "ARG",
+          p24: "COL", // Octavos
+
+          p25: "ALE",
+          p26: "USA",
+          p27: "BRA",
+          p28: "ARG", // Cuartos
+
+          p29: "ALE",
+          p30: "ARG", // Semis
+
+          p31: "ARG", // Final
+        },
+        Gui: {
+          p1: "ALE",
+          p2: "FRA",
+          p3: "RSA",
+          p4: "NED",
+          p5: "CRO",
+          p6: "ESP",
+          p7: "USA",
+          p8: "SEN",
+          p9: "JAP",
+          p10: "NOR",
+          p11: "MEX",
+          p12: "ENG",
+          p13: "CPV",
+          p14: "EGY",
+          p15: "SUI",
+          p16: "COL", // 16avos
+
+          p17: "FRA",
+          p18: "NED",
+          p19: "ESP",
+          p20: "USA",
+          p21: "JAP",
+          p22: "ENG",
+          p23: "CPV",
+          p24: "SUI", // Octavos
+
+          p25: "NED",
+          p26: "ESP",
+          p27: "JAP",
+          p28: "CPV", // Cuartos
+
+          p29: "NED",
+          p30: "JAP", // Semis
+
+          p31: "JAP", // Final
+        },
+
+        // ... los demás chicos
+      };
+
+      // 2. CONSTRUCTOR DINÁMICO DE FASESS
+      function generarTorneo() {
+        const contenedores = {
+          "16avos": document.getElementById("contenedor-16avos"),
+          octavos: document.getElementById("contenedor-octavos"),
+          cuartos: document.getElementById("contenedor-cuartos"),
+          semis: document.getElementById("contenedor-semis"),
+          final: document.getElementById("contenedor-final"),
+        };
+
+        Object.values(contenedores).forEach((c) => {
+          if (c) c.innerHTML = "";
+        });
+
+        partidosMundial.forEach((partido) => {
+          const targetContainer = contenedores[partido.fase];
+          if (!targetContainer) return;
+
+          const esFinal = partido.fase === "final";
+          const estiloCard = esFinal
+            ? 'style="border: 2px solid var(--gold) !important; background: rgba(241, 196, 15, 0.1) !important;"'
+            : "";
+          const textoHeader = esFinal
+            ? "🏆 GRAN FINAL 🏆"
+            : `PARTIDO ${partido.numero}`;
+          const textoFooter = esFinal ? "CAMPEÓN:" : "Ganador:";
+
+          // Guardamos el ganador que viene de la variable del objeto
+          const ganadorFijo = partido.ganador || "";
+
+          targetContainer.innerHTML += `
+          <div class="matchup" ${estiloCard}>
+              <div class="matchup-header">${textoHeader}</div>
+              <div class="teams-versus">
+                  <div class="team-item">
+                      <span class="team-flag">${partido.f1}</span>
+                      <span class="team-name">${partido.t1}</span>
+                  </div>
+                  <div class="vs-divider">VS</div>
+                  <div class="team-item">
+                      <span class="team-flag">${partido.f2}</span>
+                      <span class="team-name">${partido.t2}</span>
+                  </div>
+              </div>
+              <div class="matchup-footer">
+                  <span>${textoFooter}</span>
+                  <select class="resultado-real" data-partido="${partido.id}" disabled style="opacity: 1; color: white; background: #1a2a40; border: 1px solid #34495e; cursor: default;">
+                      <option value="">-</option>
+                      <option value="${partido.t1}" ${ganadorFijo === partido.t1 ? "selected" : ""}>${partido.t1}</option>
+                      <option value="${partido.t2}" ${ganadorFijo === partido.t2 ? "selected" : ""}>${partido.t2}</option>
+                  </select>
+              </div>
+          </div>
+        `;
+        });
+      }
+      // 3. ACTUALIZAR EQUIPOS EN LAS FASES SIGUIENTES (Cáscara lógica)
+      function actualizarPartidosDependientes() {
+        partidosMundial.forEach((partido) => {
+          // Evaluar procedencia de t1 (Ej: "G1")
+          if (typeof partido.t1 === "string" && partido.t1.startsWith("G")) {
+            const numProcedencia = partido.t1.replace("G", "");
+            const valorGanador = localStorage.getItem(`p${numProcedencia}`);
+            if (valorGanador) {
+              partido.t1 = valorGanador;
+              partido.f1 = mapaBanderas[valorGanador] || "❓";
+            }
+          }
+          // Evaluar procedencia de t2 (Ej: "G2")
+          if (typeof partido.t2 === "string" && partido.t2.startsWith("G")) {
+            const numProcedencia = partido.t2.replace("G", "");
+            const valorGanador = localStorage.getItem(`p${numProcedencia}`);
+            if (valorGanador) {
+              partido.t2 = valorGanador;
+              partido.f2 = mapaBanderas[valorGanador] || "❓";
+            }
+          }
+        });
+      }
+
+      // 4. CÁLCULO DE PUNTOS
+      function calcularPuntos() {
+        const resultadosReales = {};
+        document.querySelectorAll(".resultado-real").forEach((select) => {
+          const partido = select.getAttribute("data-partido");
+          resultadosReales[partido] = select.value;
+        });
+
+        for (const amigo in pronosticos) {
+          let puntos = 0;
+          for (const partido in resultadosReales) {
+            const eleccionReal = resultadosReales[partido];
+            if (eleccionReal && pronosticos[amigo][partido] === eleccionReal) {
+              puntos += 1;
+            }
+          }
+          const elementoPts = document.getElementById(`pts-${amigo}`);
+          if (elementoPts) elementoPts.innerText = puntos;
+        }
+      }
+
+      // 5. ESCUCHADOR DE CAMBIOS GENERALIZADO (Maneja almacenamiento, dependencias y re-renderizado)
+      document.addEventListener("change", function (e) {
+        if (e.target.classList.contains("resultado-real")) {
+          const partidoId = e.target.getAttribute("data-partido");
+
+          // Guardar en LocalStorage
+          localStorage.setItem(partidoId, e.target.value);
+
+          // Resetear la base de datos de los partidos a sus valores base "GXX" antes de recalcular la cadena completa
+          restablecerValoresBase();
+
+          // Procesar arrastre hacia adelante e hilos de ganadores
+          actualizarPartidosDependientes();
+
+          // Re-renderizar la vista para reflejar los nuevos países en los octavos/cuartos...
+          generarTorneo();
+
+          // Recalcular la tabla de posiciones
+          calcularPuntos();
+        }
+      });
+
+      // Función auxiliar necesaria para que al cambiar de opinión un ganador, no se rompa la cadena de texto base "G1, G2..."
+      function restablecerValoresBase() {
+        const bases = {
+          p17: { t1: "G1", t2: "G2" },
+          p18: { t1: "G3", t2: "G4" },
+          p19: { t1: "G5", t2: "G6" },
+          p20: { t1: "G7", t2: "G8" },
+          p21: { t1: "G9", t2: "G10" },
+          p22: { t1: "G11", t2: "G12" },
+          p23: { t1: "G13", t2: "G14" },
+          p24: { t1: "G15", t2: "G16" },
+          p25: { t1: "G17", t2: "G18" },
+          p26: { t1: "G19", t2: "G20" },
+          p27: { t1: "G21", t2: "G22" },
+          p28: { t1: "G23", t2: "G24" },
+          p29: { t1: "G25", t2: "G26" },
+          p30: { t1: "G27", t2: "G28" },
+          p31: { t1: "G29", t2: "G30" },
+        };
+        partidosMundial.forEach((p) => {
+          if (bases[p.id]) {
+            if (!localStorage.getItem(`p${bases[p.id].t1.replace("G", "")}`)) {
+              p.t1 = bases[p.id].t1;
+              p.f1 = "❓";
+            }
+            if (!localStorage.getItem(`p${bases[p.id].t2.replace("G", "")}`)) {
+              p.t2 = bases[p.id].t2;
+              p.f2 = "❓";
+            }
+          }
+        });
+      }
+
+      // 6. INICIALIZADOR ÚNICO DE CARGA
+      document.addEventListener("DOMContentLoaded", () => {
+        actualizarPartidosDependientes();
+        generarTorneo();
+        calcularPuntos();
+      });
+    </script>
+  </body>
+</html>
