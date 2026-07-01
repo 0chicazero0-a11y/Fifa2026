@@ -260,14 +260,18 @@
           "
         >
           <strong>Pronósticos cargados:</strong><br />
-          • <strong>Nico 💢:</strong> P1: por definir, P2: por definir<br />
-          • <strong>Alvy 👻:</strong> P1: por definir, P2: por definir<br />
-          • <strong>Alfy 🐷:</strong> P1: por definir, P2: por definir<br />
-          • <strong>Oskar 😭:</strong> P1: por definir, P2: por definir<br />
-          • <strong>Kyo 🐝:</strong> P1: por definir, P2: por definir<br />
-          • <strong>Mary 🌵:</strong> P1: por definir, P2: por definir<br />
-          • <strong>Gera 🐱:</strong> P1: por definir, P2: por definir<br />
-          • <strong>Gui ☕️ :</strong> P1: por definir, P2: por definir
+          <!-- Sección dentro de tu barra lateral (Tabla de Puntos) -->
+          <div class="pronosticos-container">
+            <h3 id="titulo-pronosticos">
+              Pronósticos cargados (Selecciona un partido):
+            </h3>
+            <ul id="lista-pronosticos">
+              <!-- Aquí se inyectarán los picks dinámicamente con JavaScript -->
+              <li style="color: #8a99ad">
+                Haz clic en cualquier partido para ver qué votó cada quien.
+              </li>
+            </ul>
+          </div>
         </div>
 
         <table>
@@ -314,6 +318,7 @@
         </table>
       </div>
     </div>
+
     <script>
       // 1. EL SEEDER (Base de datos unificada de los 31 partidos)
       const partidosMundial = [
@@ -477,7 +482,6 @@
           f2: "🇬🇭",
           ganador: "TBD",
         },
-
         {
           id: "p17",
           numero: 17,
@@ -558,7 +562,6 @@
           f2: "❓",
           ganador: "TBD",
         },
-
         {
           id: "p25",
           numero: 25,
@@ -599,7 +602,6 @@
           f2: "❓",
           ganador: "TBD",
         },
-
         {
           id: "p29",
           numero: 29,
@@ -620,7 +622,6 @@
           f2: "❓",
           ganador: "TBD",
         },
-
         {
           id: "p31",
           numero: 31,
@@ -642,17 +643,6 @@
         }
       });
 
-      // const pronosticos = {
-      //   Nico: { p1: "por definir", p2: "por definir" },
-      //   Alvy: { p1: "por definir", p2: "por definir" },
-      //   Alfy: { p1: "por definir", p2: "por definir" },
-      //   Oskar: { p1: "por definir", p2: "por definir" },
-      //   Kyo: { p1: "por definir", p2: "por definir" },
-      //   Mary: { p1: "por definir", p2: "por definir" },
-      //   Gera: { p1: "por definir", p2: "por definir" },
-      //   Gui: { p1: "por definir", p2: "por definir" },
-      // };
-
       const pronosticos = {
         Nico: {
           p1: "ALE",
@@ -670,7 +660,7 @@
           p13: "ARG",
           p14: "EGY",
           p15: "SUI",
-          p16: "COL", // ... 16avos
+          p16: "COL",
           p17: "ALE",
           p18: "NED",
           p19: "POR",
@@ -678,15 +668,14 @@
           p21: "JAP",
           p22: "MEX",
           p23: "ARG",
-          p24: "SUI", // ... Octavos (usas el país que creen que ganará)
+          p24: "SUI",
           p25: "ALE",
           p26: "USA",
           p27: "JAP",
-          p28: "ARG", //... Cuartos
+          p28: "ARG",
           p29: "ALE",
-          p30: "ARG", //... Semis
-          p31: "ARG", //...Final
-          // y así sucesivamente hasta la final (p31)
+          p30: "ARG",
+          p31: "ARG",
         },
         Alvy: {
           p1: "ALE",
@@ -704,7 +693,7 @@
           p13: "ARG",
           p14: "AUS",
           p15: "ALG",
-          p16: "COL", // ... 16avos
+          p16: "COL",
           p17: "ALE",
           p18: "RSA",
           p19: "ESP",
@@ -712,15 +701,14 @@
           p21: "JAP",
           p22: "ECU",
           p23: "AUS",
-          p24: "COL", // ... Octavos (usas el país que creen que ganará)
+          p24: "COL",
           p25: "ALE",
           p26: "USA",
           p27: "JAP",
-          p28: "AUS", //... Cuartos
+          p28: "AUS",
           p29: "USA",
-          p30: "JAP", //... Semis
-          p31: "USA", //...Final
-          // y así sucesivamente hasta la final (p31)
+          p30: "JAP",
+          p31: "USA",
         },
         Alfy: {
           p1: "ALE",
@@ -738,8 +726,7 @@
           p13: "ARG",
           p14: "EGY",
           p15: "ALG",
-          p16: "COL", // 16avos
-
+          p16: "COL",
           p17: "FRA",
           p18: "NED",
           p19: "ESP",
@@ -747,17 +734,14 @@
           p21: "BRA",
           p22: "MEX",
           p23: "ARG",
-          p24: "COL", // Octavos
-
+          p24: "COL",
           p25: "FRA",
           p26: "ESP",
           p27: "MEX",
-          p28: "ARG", // Cuartos
-
+          p28: "ARG",
           p29: "ESP",
-          p30: "ARG", // Semis
-
-          p31: "ARG", // Final
+          p30: "ARG",
+          p31: "ARG",
         },
         Oskar: {
           p1: "ALE",
@@ -775,8 +759,7 @@
           p13: "ARG",
           p14: "AUS",
           p15: "SUI",
-          p16: "COL", // 16avos
-
+          p16: "COL",
           p17: "FRA",
           p18: "NED",
           p19: "ESP",
@@ -784,17 +767,14 @@
           p21: "BRA",
           p22: "COD",
           p23: "ARG",
-          p24: "COL", // Octavos
-
+          p24: "COL",
           p25: "FRA",
           p26: "ESP",
           p27: "BRA",
-          p28: "COL", // Cuartos
-
+          p28: "COL",
           p29: "FRA",
-          p30: "BRA", // Semis
-
-          p31: "FRA", // Final
+          p30: "BRA",
+          p31: "FRA",
         },
         Kyo: {
           p1: "ALE",
@@ -812,8 +792,7 @@
           p13: "ARG",
           p14: "EGY",
           p15: "SUI",
-          p16: "COL", // 16avos
-
+          p16: "COL",
           p17: "ALE",
           p18: "CAN",
           p19: "POR",
@@ -821,17 +800,14 @@
           p21: "JAP",
           p22: "MEX",
           p23: "ARG",
-          p24: "SUI", // Octavos
-
+          p24: "SUI",
           p25: "ALE",
           p26: "POR",
           p27: "JAP",
-          p28: "ARG", // Cuartos
-
+          p28: "ARG",
           p29: "POR",
-          p30: "JAP", // Semis
-
-          p31: "JAP", // Final
+          p30: "JAP",
+          p31: "JAP",
         },
         Mary: {
           p1: "ALE",
@@ -849,8 +825,7 @@
           p13: "ARG",
           p14: "EGY",
           p15: "SUI",
-          p16: "COL", // 16avos
-
+          p16: "COL",
           p17: "FRA",
           p18: "NED",
           p19: "POR",
@@ -858,17 +833,14 @@
           p21: "NOR",
           p22: "ENG",
           p23: "ARG",
-          p24: "COL", // Octavos
-
+          p24: "COL",
           p25: "FRA",
           p26: "POR",
           p27: "NOR",
-          p28: "COL", // Cuartos
-
+          p28: "COL",
           p29: "FRA",
-          p30: "NOR", // Semis
-
-          p31: "FRA", // Final
+          p30: "NOR",
+          p31: "FRA",
         },
         Gera: {
           p1: "ALE",
@@ -886,8 +858,7 @@
           p13: "ARG",
           p14: "AUS",
           p15: "SUI",
-          p16: "COL", // 16avos
-
+          p16: "COL",
           p17: "ALE",
           p18: "TBD",
           p19: "CRO",
@@ -895,17 +866,14 @@
           p21: "BRA",
           p22: "ECU",
           p23: "ARG",
-          p24: "COL", // Octavos
-
+          p24: "COL",
           p25: "ALE",
           p26: "USA",
           p27: "BRA",
-          p28: "ARG", // Cuartos
-
+          p28: "ARG",
           p29: "ALE",
-          p30: "ARG", // Semis
-
-          p31: "ARG", // Final
+          p30: "ARG",
+          p31: "ARG",
         },
         Gui: {
           p1: "ALE",
@@ -923,8 +891,7 @@
           p13: "CPV",
           p14: "EGY",
           p15: "SUI",
-          p16: "COL", // 16avos
-
+          p16: "COL",
           p17: "FRA",
           p18: "NED",
           p19: "ESP",
@@ -932,23 +899,18 @@
           p21: "JAP",
           p22: "ENG",
           p23: "CPV",
-          p24: "SUI", // Octavos
-
+          p24: "SUI",
           p25: "NED",
           p26: "ESP",
           p27: "JAP",
-          p28: "CPV", // Cuartos
-
+          p28: "CPV",
           p29: "NED",
-          p30: "JAP", // Semis
-
-          p31: "JAP", // Final
+          p30: "JAP",
+          p31: "JAP",
         },
-
-        // ... los demás chicos
       };
 
-      // 2. CONSTRUCTOR DINÁMICO DE FASESS
+      // 2. CONSTRUCTOR DINÁMICO DE FASES
       function generarTorneo() {
         const contenedores = {
           "16avos": document.getElementById("contenedor-16avos"),
@@ -974,40 +936,41 @@
             ? "🏆 GRAN FINAL 🏆"
             : `PARTIDO ${partido.numero}`;
           const textoFooter = esFinal ? "CAMPEÓN:" : "Ganador:";
-
-          // Guardamos el ganador que viene de la variable del objeto
           const ganadorFijo = partido.ganador || "";
 
           targetContainer.innerHTML += `
-          <div class="matchup" ${estiloCard}>
-              <div class="matchup-header">${textoHeader}</div>
-              <div class="teams-versus">
-                  <div class="team-item">
-                      <span class="team-flag">${partido.f1}</span>
-                      <span class="team-name">${partido.t1}</span>
-                  </div>
-                  <div class="vs-divider">VS</div>
-                  <div class="team-item">
-                      <span class="team-flag">${partido.f2}</span>
-                      <span class="team-name">${partido.t2}</span>
-                  </div>
-              </div>
-              <div class="matchup-footer">
-                  <span>${textoFooter}</span>
-                  <select class="resultado-real" data-partido="${partido.id}" disabled style="opacity: 1; color: white; background: #1a2a40; border: 1px solid #34495e; cursor: default;">
-                      <option value="">-</option>
-                      <option value="${partido.t1}" ${ganadorFijo === partido.t1 ? "selected" : ""}>${partido.t1}</option>
-                      <option value="${partido.t2}" ${ganadorFijo === partido.t2 ? "selected" : ""}>${partido.t2}</option>
-                  </select>
-              </div>
-          </div>
-        `;
+                <div class="matchup" ${estiloCard} onclick="mostrarPronosticosPartido('${partido.id}', 'PARTIDO ${partido.numero}')" style="cursor: pointer;">
+                    <div class="matchup-header">${textoHeader}</div>
+                    <div class="teams-versus">
+                        <div class="team-item">
+                            <span class="team-flag">${partido.f1}</span>
+                            <span class="team-name">${partido.t1}</span>
+                        </div>
+                        <div class="vs-divider">VS</div>
+                        <div class="team-item">
+                            <span class="team-flag">${partido.f2}</span>
+                            <span class="team-name">${partido.t2}</span>
+                        </div>
+                    </div>
+
+                    <div class="matchup-porcentajes" id="porcentajes-${partido.id.toLowerCase()}" style="display: none; font-size: 0.85em; text-align: center; margin: 8px 0; color: #f1c40f; font-weight: bold;"></div>
+                    
+                    <div class="matchup-footer">
+                        <span>${textoFooter}</span>
+                        <select class="resultado-real" data-partido="${partido.id}" disabled style="opacity: 1; color: white; background: #1a2a40; border: 1px solid #34495e; cursor: default;">
+                            <option value="">-</option>
+                            <option value="${partido.t1}" ${ganadorFijo === partido.t1 ? "selected" : ""}>${partido.t1}</option>
+                            <option value="${partido.t2}" ${ganadorFijo === partido.t2 ? "selected" : ""}>${partido.t2}</option>
+                        </select>
+                    </div>
+                </div>
+              `;
         });
       }
-      // 3. ACTUALIZAR EQUIPOS EN LAS FASES SIGUIENTES (Cáscara lógica)
+
+      // 3. ACTUALIZAR EQUIPOS EN LAS FASES SIGUIENTES
       function actualizarPartidosDependientes() {
         partidosMundial.forEach((partido) => {
-          // Evaluar procedencia de t1 (Ej: "G1")
           if (typeof partido.t1 === "string" && partido.t1.startsWith("G")) {
             const numProcedencia = partido.t1.replace("G", "");
             const valorGanador = localStorage.getItem(`p${numProcedencia}`);
@@ -1016,7 +979,6 @@
               partido.f1 = mapaBanderas[valorGanador] || "❓";
             }
           }
-          // Evaluar procedencia de t2 (Ej: "G2")
           if (typeof partido.t2 === "string" && partido.t2.startsWith("G")) {
             const numProcedencia = partido.t2.replace("G", "");
             const valorGanador = localStorage.getItem(`p${numProcedencia}`);
@@ -1028,13 +990,27 @@
         });
       }
 
-      // 4. CÁLCULO DE PUNTOS
       function calcularPuntos() {
         const resultadosReales = {};
         document.querySelectorAll(".resultado-real").forEach((select) => {
           const partido = select.getAttribute("data-partido");
           resultadosReales[partido] = select.value;
         });
+
+        // 1. Calcular los puntos de cada amigo
+        const ranking = [];
+
+        // Diccionario para no perder los emojis personalizados de tus amigos al reordenar
+        const emojisAmigos = {
+          Nico: "💢",
+          Alvy: "👻",
+          Alfy: "🐷",
+          Oskar: "😭",
+          Kyo: "🐝",
+          Mary: "🌵",
+          Gera: "🐱",
+          Gui: "☕",
+        };
 
         for (const amigo in pronosticos) {
           let puntos = 0;
@@ -1044,34 +1020,51 @@
               puntos += 1;
             }
           }
-          const elementoPts = document.getElementById(`pts-${amigo}`);
-          if (elementoPts) elementoPts.innerText = puntos;
+          ranking.push({ nombre: amigo, puntos: puntos });
+        }
+
+        // 2. Ordenar el ranking de mayor a menor puntaje
+        ranking.sort((a, b) => b.puntos - a.puntos);
+
+        // 3. Seleccionar el cuerpo de la tabla que me mostraste
+        const tbody = document.getElementById("tabla-puntuaciones");
+
+        if (tbody) {
+          // Vaciamos las filas fijas actuales para meter el nuevo orden
+          tbody.innerHTML = "";
+
+          ranking.forEach((jugador, indice) => {
+            // Determinar si le toca medalla por estar en el top 3
+            let medalla = "";
+            if (indice === 0) medalla = "🥇 ";
+            else if (indice === 1) medalla = "🥈 ";
+            else if (indice === 2) medalla = "🥉 ";
+
+            // Obtener el emoji correspondiente (si no existe, se queda vacío)
+            const emoji = emojisAmigos[jugador.nombre] || "";
+
+            // Inyectamos la fila armada dinámicamente con la estructura exacta de tu tabla
+            tbody.innerHTML += `
+        <tr>
+          <td>${medalla}${jugador.nombre} ${emoji}</td>
+          <td style="text-align: right" id="pts-${jugador.nombre}">${jugador.puntos}</td>
+        </tr>
+      `;
+          });
         }
       }
-
-      // 5. ESCUCHADOR DE CAMBIOS GENERALIZADO (Maneja almacenamiento, dependencias y re-renderizado)
+      // 5. ESCUCHADOR DE CAMBIOS GENERALIZADO
       document.addEventListener("change", function (e) {
         if (e.target.classList.contains("resultado-real")) {
           const partidoId = e.target.getAttribute("data-partido");
-
-          // Guardar en LocalStorage
           localStorage.setItem(partidoId, e.target.value);
-
-          // Resetear la base de datos de los partidos a sus valores base "GXX" antes de recalcular la cadena completa
           restablecerValoresBase();
-
-          // Procesar arrastre hacia adelante e hilos de ganadores
           actualizarPartidosDependientes();
-
-          // Re-renderizar la vista para reflejar los nuevos países en los octavos/cuartos...
           generarTorneo();
-
-          // Recalcular la tabla de posiciones
           calcularPuntos();
         }
       });
 
-      // Función auxiliar necesaria para que al cambiar de opinión un ganador, no se rompa la cadena de texto base "G1, G2..."
       function restablecerValoresBase() {
         const bases = {
           p17: { t1: "G1", t2: "G2" },
@@ -1110,6 +1103,66 @@
         generarTorneo();
         calcularPuntos();
       });
+
+      // 📊 FUNCIÓN COMPLETA CON PORCENTAJES Y LISTA DE AMIGOS
+      function mostrarPronosticosPartido(idPartido, numeroPartidoTexto) {
+        document.getElementById("titulo-pronosticos").innerText =
+          `Pronósticos cargados - ${numeroPartidoTexto}:`;
+        const listaUL = document.getElementById("lista-pronosticos");
+        listaUL.innerHTML = "";
+
+        const idEnMinuscula = idPartido.toLowerCase();
+
+        // Buscamos el partido en nuestro seeder para saber los nombres exactos de los equipos activos
+        const datosPartido = partidosMundial.find(
+          (p) => p.id === idEnMinuscula,
+        );
+        if (!datosPartido) return;
+
+        const nombreE1 = datosPartido.t1;
+        const nombreE2 = datosPartido.t2;
+
+        let votosEquipo1 = 0;
+        let votosEquipo2 = 0;
+        let totalAmigosConVoto = 0;
+
+        // Recorrer los pronósticos reales del objeto 'pronosticos'
+        for (const amigo in pronosticos) {
+          const pick = pronosticos[amigo][idEnMinuscula];
+
+          const li = document.createElement("li");
+          li.innerHTML = `<strong>${amigo}</strong>: ${pick || "por definir"}`;
+          listaUL.appendChild(li);
+
+          if (pick === nombreE1) {
+            votosEquipo1++;
+            totalAmigosConVoto++;
+          } else if (pick === nombreE2) {
+            votosEquipo2++;
+            totalAmigosConVoto++;
+          }
+        }
+
+        // Ocultar primero todos los contenedores de porcentaje previos para que solo se vea el activo
+        document
+          .querySelectorAll(".matchup-porcentajes")
+          .forEach((box) => (box.style.display = "none"));
+
+        // Calcular y mostrar porcentaje en la tarjeta correspondiente
+        const contenedorPorcentaje = document.getElementById(
+          `porcentajes-${idEnMinuscula}`,
+        );
+        if (contenedorPorcentaje) {
+          if (totalAmigosConVoto > 0) {
+            const pct1 = Math.round((votosEquipo1 / totalAmigosConVoto) * 100);
+            const pct2 = Math.round((votosEquipo2 / totalAmigosConVoto) * 100);
+            contenedorPorcentaje.innerHTML = `📊 ${nombreE1} ${pct1}% — ${pct2}% ${nombreE2}`;
+          } else {
+            contenedorPorcentaje.innerHTML = "📊 Sin pronósticos válidos";
+          }
+          contenedorPorcentaje.style.display = "block";
+        }
+      }
     </script>
   </body>
   <label
