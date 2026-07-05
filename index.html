@@ -206,6 +206,32 @@
         font-size: 12px;
         text-transform: uppercase;
       }
+
+      /* --- BARRA DE SCROLL SOLO PARA LAS COLUMNAS DE LAS FASES --- */
+
+      /* 1. Definimos el ancho de la barra dentro de las columnas */
+      .fase-container::-webkit-scrollbar {
+        width: 8px; /* Un poco más delgada para que se vea sutil */
+        height: 8px;
+      }
+
+      /* 2. El carril/fondo oscuro de la columna */
+      .fase-container::-webkit-scrollbar-track {
+        background: #0b111e; /* Color oscuro idéntico al fondo de tu app */
+        border-radius: 10px;
+      }
+
+      /* 3. La barrita gris que se mueve */
+      .fase-container::-webkit-scrollbar-thumb {
+        background: #1e293b; /* Gris azulado sutil */
+        border: 2px solid #0b111e; /* Espaciado para que se vea flotando */
+        border-radius: 10px;
+      }
+
+      /* 4. El toque premium: cuando pasas el mouse por encima, brilla en azul */
+      .fase-container::-webkit-scrollbar-thumb:hover {
+        background: #38bdf8; /* Azul brillante */
+      }
     </style>
   </head>
   <body>
@@ -490,7 +516,7 @@
           f1: "❓",
           t2: "G2",
           f2: "❓",
-          ganador: "TBD",
+          ganador: "FRA",
         },
         {
           id: "p18",
@@ -500,7 +526,7 @@
           f1: "❓",
           t2: "G4",
           f2: "❓",
-          ganador: "TBD",
+          ganador: "MAR",
         },
         {
           id: "p19",
@@ -661,21 +687,21 @@
           p14: "EGY",
           p15: "SUI",
           p16: "COL",
-          p17: "ALE",
-          p18: "NED",
-          p19: "POR",
+          p17: "FRA",
+          p18: "MAR",
+          p19: "ESP",
           p20: "USA",
-          p21: "JAP",
+          p21: "BRA",
           p22: "MEX",
           p23: "ARG",
-          p24: "SUI",
-          p25: "ALE",
-          p26: "USA",
-          p27: "JAP",
-          p28: "ARG",
-          p29: "ALE",
-          p30: "ARG",
-          p31: "ARG",
+          p24: "COL",
+          p25: "por choicear",
+          p26: "por choicear",
+          p27: "por choicear",
+          p28: "por choicear",
+          p29: "por choicear",
+          p30: "por choicear",
+          p31: "por choicear",
         },
         Alvy: {
           p1: "ALE",
@@ -694,21 +720,21 @@
           p14: "AUS",
           p15: "ALG",
           p16: "COL",
-          p17: "ALE",
-          p18: "RSA",
+          p17: "PAR",
+          p18: "CAN",
           p19: "ESP",
           p20: "USA",
-          p21: "JAP",
-          p22: "ECU",
-          p23: "AUS",
+          p21: "BRA",
+          p22: "MEX",
+          p23: "ARG",
           p24: "COL",
-          p25: "ALE",
-          p26: "USA",
-          p27: "JAP",
-          p28: "AUS",
-          p29: "USA",
-          p30: "JAP",
-          p31: "USA",
+          p25: "por choicear",
+          p26: "por choicear",
+          p27: "por choicear",
+          p28: "por choicear",
+          p29: "por choicear",
+          p30: "por choicear",
+          p31: "por choicear",
         },
         Alfy: {
           p1: "ALE",
@@ -735,13 +761,14 @@
           p22: "MEX",
           p23: "ARG",
           p24: "COL",
-          p25: "FRA",
-          p26: "ESP",
-          p27: "MEX",
-          p28: "ARG",
-          p29: "ESP",
-          p30: "ARG",
-          p31: "ARG",
+          p25: "por choicear",
+          p25: "por choicear",
+          p26: "por choicear",
+          p27: "por choicear",
+          p28: "por choicear",
+          p29: "por choicear",
+          p30: "por choicear",
+          p31: "por choicear",
         },
         Oskar: {
           p1: "ALE",
@@ -761,20 +788,20 @@
           p15: "SUI",
           p16: "COL",
           p17: "FRA",
-          p18: "NED",
+          p18: "CAN",
           p19: "ESP",
           p20: "BEL",
           p21: "BRA",
-          p22: "COD",
+          p22: "ENG",
           p23: "ARG",
           p24: "COL",
-          p25: "FRA",
-          p26: "ESP",
-          p27: "BRA",
-          p28: "COL",
-          p29: "FRA",
-          p30: "BRA",
-          p31: "FRA",
+          p25: "por choicear",
+          p26: "por choicear",
+          p27: "por choicear",
+          p28: "por choicear",
+          p29: "por choicear",
+          p30: "por choicear",
+          p31: "por choicear",
         },
         Kyo: {
           p1: "ALE",
@@ -793,21 +820,21 @@
           p14: "EGY",
           p15: "SUI",
           p16: "COL",
-          p17: "ALE",
+          p17: "PAR",
           p18: "CAN",
           p19: "POR",
           p20: "USA",
-          p21: "JAP",
+          p21: "BRA",
           p22: "MEX",
-          p23: "ARG",
-          p24: "SUI",
-          p25: "ALE",
-          p26: "POR",
-          p27: "JAP",
-          p28: "ARG",
-          p29: "POR",
-          p30: "JAP",
-          p31: "JAP",
+          p23: "EGY",
+          p24: "COL",
+          p25: "por choicear",
+          p26: "por choicear",
+          p27: "por choicear",
+          p28: "por choicear",
+          p29: "por choicear",
+          p30: "por choicear",
+          p31: "por choicear",
         },
         Mary: {
           p1: "ALE",
@@ -827,20 +854,20 @@
           p15: "SUI",
           p16: "COL",
           p17: "FRA",
-          p18: "NED",
+          p18: "MAR",
           p19: "POR",
-          p20: "SEN",
+          p20: "BEL",
           p21: "NOR",
           p22: "ENG",
           p23: "ARG",
           p24: "COL",
-          p25: "FRA",
-          p26: "POR",
-          p27: "NOR",
-          p28: "COL",
-          p29: "FRA",
-          p30: "NOR",
-          p31: "FRA",
+          p25: "por choicear",
+          p26: "por choicear",
+          p27: "por choicear",
+          p28: "por choicear",
+          p29: "por choicear",
+          p30: "por choicear",
+          p31: "por choicear",
         },
         Gera: {
           p1: "ALE",
@@ -859,21 +886,21 @@
           p14: "AUS",
           p15: "SUI",
           p16: "COL",
-          p17: "ALE",
-          p18: "TBD",
-          p19: "CRO",
+          p17: "FRA",
+          p18: "MAR",
+          p19: "ESP",
           p20: "BEL",
           p21: "BRA",
-          p22: "ECU",
+          p22: "ENG",
           p23: "ARG",
           p24: "COL",
-          p25: "ALE",
-          p26: "USA",
-          p27: "BRA",
-          p28: "ARG",
-          p29: "ALE",
-          p30: "ARG",
-          p31: "ARG",
+          p25: "por choicear",
+          p26: "por choicear",
+          p27: "por choicear",
+          p28: "por choicear",
+          p29: "por choicear",
+          p30: "por choicear",
+          p31: "por choicear",
         },
         Gui: {
           p1: "ALE",
@@ -892,6 +919,273 @@
           p14: "EGY",
           p15: "SUI",
           p16: "COL",
+          p17: "PAR",
+          p18: "MAR",
+          p19: "ESP",
+          p20: "USA",
+          p21: "BRA",
+          p22: "MEX",
+          p23: "ARG",
+          p24: "COL",
+          p25: "por choicear",
+          p26: "por choicear",
+          p27: "por choicear",
+          p28: "por choicear",
+          p29: "por choicear",
+          p30: "por choicear",
+          p31: "por choicear",
+        },
+      };
+
+      const pronosticosDorados = {
+        Nico: {
+          p1: "Filler",
+          p2: "Filler",
+          p3: "Filler",
+          p4: "Filler",
+          p5: "Filler",
+          p6: "Filler",
+          p7: "Filler",
+          p8: "Filler",
+          p9: "Filler",
+          p10: "Filler",
+          p11: "Filler",
+          p12: "Filler",
+          p13: "Filler",
+          p14: "Filler",
+          p15: "Filler",
+          p16: "Filler",
+          p17: "ALE",
+          p18: "NED",
+          p19: "POR",
+          p20: "USA",
+          p21: "JAP",
+          p22: "MEX",
+          p23: "ARG",
+          p24: "SUI",
+          p25: "ALE",
+          p26: "USA",
+          p27: "JAP",
+          p28: "ARG",
+          p29: "ALE",
+          p30: "ARG",
+          p31: "ARG",
+        },
+        Alvy: {
+          p1: "Filler",
+          p2: "Filler",
+          p3: "Filler",
+          p4: "Filler",
+          p5: "Filler",
+          p6: "Filler",
+          p7: "Filler",
+          p8: "Filler",
+          p9: "Filler",
+          p10: "Filler",
+          p11: "Filler",
+          p12: "Filler",
+          p13: "Filler",
+          p14: "Filler",
+          p15: "Filler",
+          p16: "Filler",
+          p17: "ALE",
+          p18: "RSA",
+          p19: "ESP",
+          p20: "USA",
+          p21: "JAP",
+          p22: "ECU",
+          p23: "AUS",
+          p24: "COL",
+          p25: "ALE",
+          p26: "USA",
+          p27: "JAP",
+          p28: "AUS",
+          p29: "USA",
+          p30: "JAP",
+          p31: "USA",
+        },
+        Alfy: {
+          p1: "Filler",
+          p2: "Filler",
+          p3: "Filler",
+          p4: "Filler",
+          p5: "Filler",
+          p6: "Filler",
+          p7: "Filler",
+          p8: "Filler",
+          p9: "Filler",
+          p10: "Filler",
+          p11: "Filler",
+          p12: "Filler",
+          p13: "Filler",
+          p14: "Filler",
+          p15: "Filler",
+          p16: "Filler",
+          p17: "FRA",
+          p18: "NED",
+          p19: "ESP",
+          p20: "USA",
+          p21: "BRA",
+          p22: "MEX",
+          p23: "ARG",
+          p24: "COL",
+          p25: "FRA",
+          p26: "ESP",
+          p27: "MEX",
+          p28: "ARG",
+          p29: "ESP",
+          p30: "ARG",
+          p31: "ARG",
+        },
+        Oskar: {
+          p1: "Filler",
+          p2: "Filler",
+          p3: "Filler",
+          p4: "Filler",
+          p5: "Filler",
+          p6: "Filler",
+          p7: "Filler",
+          p8: "Filler",
+          p9: "Filler",
+          p10: "Filler",
+          p11: "Filler",
+          p12: "Filler",
+          p13: "Filler",
+          p14: "Filler",
+          p15: "Filler",
+          p16: "Filler",
+          p17: "FRA",
+          p18: "NED",
+          p19: "ESP",
+          p20: "BEL",
+          p21: "BRA",
+          p22: "COD",
+          p23: "ARG",
+          p24: "COL",
+          p25: "FRA",
+          p26: "ESP",
+          p27: "BRA",
+          p28: "COL",
+          p29: "FRA",
+          p30: "BRA",
+          p31: "FRA",
+        },
+        Kyo: {
+          p1: "Filler",
+          p2: "Filler",
+          p3: "Filler",
+          p4: "Filler",
+          p5: "Filler",
+          p6: "Filler",
+          p7: "Filler",
+          p8: "Filler",
+          p9: "Filler",
+          p10: "Filler",
+          p11: "Filler",
+          p12: "Filler",
+          p13: "Filler",
+          p14: "Filler",
+          p15: "Filler",
+          p16: "Filler",
+          p17: "ALE",
+          p18: "CAN",
+          p19: "POR",
+          p20: "USA",
+          p21: "JAP",
+          p22: "MEX",
+          p23: "ARG",
+          p24: "SUI",
+          p25: "ALE",
+          p26: "POR",
+          p27: "JAP",
+          p28: "ARG",
+          p29: "POR",
+          p30: "JAP",
+          p31: "JAP",
+        },
+        Mary: {
+          p1: "Filler",
+          p2: "Filler",
+          p3: "Filler",
+          p4: "Filler",
+          p5: "Filler",
+          p6: "Filler",
+          p7: "Filler",
+          p8: "Filler",
+          p9: "Filler",
+          p10: "Filler",
+          p11: "Filler",
+          p12: "Filler",
+          p13: "Filler",
+          p14: "Filler",
+          p15: "Filler",
+          p16: "Filler",
+          p17: "FRA",
+          p18: "NED",
+          p19: "POR",
+          p20: "SEN",
+          p21: "NOR",
+          p22: "ENG",
+          p23: "ARG",
+          p24: "COL",
+          p25: "FRA",
+          p26: "POR",
+          p27: "NOR",
+          p28: "COL",
+          p29: "FRA",
+          p30: "NOR",
+          p31: "FRA",
+        },
+        Gera: {
+          p1: "Filler",
+          p2: "Filler",
+          p3: "Filler",
+          p4: "Filler",
+          p5: "Filler",
+          p6: "Filler",
+          p7: "Filler",
+          p8: "Filler",
+          p9: "Filler",
+          p10: "Filler",
+          p11: "Filler",
+          p12: "Filler",
+          p13: "Filler",
+          p14: "Filler",
+          p15: "Filler",
+          p16: "Filler",
+          p17: "ALE",
+          p18: "TBD",
+          p19: "CRO",
+          p20: "BEL",
+          p21: "BRA",
+          p22: "ECU",
+          p23: "ARG",
+          p24: "COL",
+          p25: "ALE",
+          p26: "USA",
+          p27: "BRA",
+          p28: "ARG",
+          p29: "ALE",
+          p30: "ARG",
+          p31: "ARG",
+        },
+        Gui: {
+          p1: "Filler",
+          p2: "Filler",
+          p3: "Filler",
+          p4: "Filler",
+          p5: "Filler",
+          p6: "Filler",
+          p7: "Filler",
+          p8: "Filler",
+          p9: "Filler",
+          p10: "Filler",
+          p11: "Filler",
+          p12: "Filler",
+          p13: "Filler",
+          p14: "Filler",
+          p15: "Filler",
+          p16: "Filler",
           p17: "FRA",
           p18: "NED",
           p19: "ESP",
@@ -967,22 +1261,77 @@
               `;
         });
       }
-
-      // 3. ACTUALIZAR EQUIPOS EN LAS FASES SIGUIENTES
+      // 3. ACTUALIZAR EQUIPOS EN LAS FASES SIGUIENTES (Versión Mutación Protegida)
       function actualizarPartidosDependientes() {
         partidosMundial.forEach((partido) => {
-          if (typeof partido.t1 === "string" && partido.t1.startsWith("G")) {
-            const numProcedencia = partido.t1.replace("G", "");
-            const valorGanador = localStorage.getItem(`p${numProcedencia}`);
-            if (valorGanador) {
+          // --- EVALUAR EQUIPO 1 ---
+          if (
+            typeof partido.t1 === "string" &&
+            partido.t1.startsWith("G") &&
+            !partido.origenT1
+          ) {
+            partido.origenT1 = partido.t1;
+          }
+          const formulaT1 = partido.origenT1 || partido.t1;
+
+          if (typeof formulaT1 === "string" && formulaT1.startsWith("G")) {
+            const numProcedencia = formulaT1.replace("G", "");
+            const idBuscado = `p${numProcedencia}`;
+            const partidoPrevio = partidosMundial.find(
+              (p) => p.id === idBuscado,
+            );
+
+            // Intentamos sacar el ganador real ignorando los "TBD" que vengan del localStorage bagueado
+            let valorGanador = localStorage.getItem(idBuscado);
+            if (
+              !valorGanador ||
+              valorGanador === "TBD" ||
+              valorGanador === "-"
+            ) {
+              valorGanador = partidoPrevio?.ganador || "";
+            }
+
+            if (
+              valorGanador &&
+              valorGanador !== "TBD" &&
+              valorGanador !== "-"
+            ) {
               partido.t1 = valorGanador;
               partido.f1 = mapaBanderas[valorGanador] || "❓";
             }
           }
-          if (typeof partido.t2 === "string" && partido.t2.startsWith("G")) {
-            const numProcedencia = partido.t2.replace("G", "");
-            const valorGanador = localStorage.getItem(`p${numProcedencia}`);
-            if (valorGanador) {
+
+          // --- EVALUAR EQUIPO 2 ---
+          if (
+            typeof partido.t2 === "string" &&
+            partido.t2.startsWith("G") &&
+            !partido.origenT2
+          ) {
+            partido.origenT2 = partido.t2;
+          }
+          const formulaT2 = partido.origenT2 || partido.t2;
+
+          if (typeof formulaT2 === "string" && formulaT2.startsWith("G")) {
+            const numProcedencia = formulaT2.replace("G", "");
+            const idBuscado = `p${numProcedencia}`;
+            const partidoPrevio = partidosMundial.find(
+              (p) => p.id === idBuscado,
+            );
+
+            let valorGanador = localStorage.getItem(idBuscado);
+            if (
+              !valorGanador ||
+              valorGanador === "TBD" ||
+              valorGanador === "-"
+            ) {
+              valorGanador = partidoPrevio?.ganador || "";
+            }
+
+            if (
+              valorGanador &&
+              valorGanador !== "TBD" &&
+              valorGanador !== "-"
+            ) {
               partido.t2 = valorGanador;
               partido.f2 = mapaBanderas[valorGanador] || "❓";
             }
@@ -991,16 +1340,7 @@
       }
 
       function calcularPuntos() {
-        const resultadosReales = {};
-        document.querySelectorAll(".resultado-real").forEach((select) => {
-          const partido = select.getAttribute("data-partido");
-          resultadosReales[partido] = select.value;
-        });
-
-        // 1. Calcular los puntos de cada amigo
         const ranking = [];
-
-        // Diccionario para no perder los emojis personalizados de tus amigos al reordenar
         const emojisAmigos = {
           Nico: "💢",
           Alvy: "👻",
@@ -1014,40 +1354,72 @@
 
         for (const amigo in pronosticos) {
           let puntos = 0;
-          for (const partido in resultadosReales) {
-            const eleccionReal = resultadosReales[partido];
-            if (eleccionReal && pronosticos[amigo][partido] === eleccionReal) {
-              puntos += 1;
+
+          partidosMundial.forEach((partidoObj) => {
+            const idPartido = partidoObj.id;
+
+            if (partidoObj.fase === "16avos") {
+              const eleccionReal = partidoObj.ganador;
+              if (
+                eleccionReal &&
+                eleccionReal !== "TBD" &&
+                eleccionReal !== ""
+              ) {
+                const pickOriginal = pronosticos[amigo]?.[idPartido];
+                if (pickOriginal === eleccionReal) {
+                  puntos += 1;
+                }
+              }
+            } else {
+              // Octavos en adelante
+              const eleccionReal =
+                localStorage.getItem(idPartido) || partidoObj.ganador || "";
+
+              if (
+                eleccionReal &&
+                eleccionReal !== "TBD" &&
+                eleccionReal !== ""
+              ) {
+                const pickReelegido = pronosticosDorados[amigo]?.[idPartido];
+                const pickOriginal = pronosticos[amigo]?.[idPartido];
+
+                let ganoPuntoReeleccion = false;
+
+                // 1. ¿Acertó su nuevo pick del repick dinámico? -> +1 punto
+                if (pickReelegido === eleccionReal) {
+                  puntos += 1;
+                  ganoPuntoReeleccion = true;
+                }
+
+                // 2. ¿Acertó su pick de la plantilla original? (BONO DORADO) -> +1 punto
+                if (pickOriginal === eleccionReal) {
+                  puntos += 1;
+                }
+              }
             }
-          }
+          });
+
           ranking.push({ nombre: amigo, puntos: puntos });
         }
 
-        // 2. Ordenar el ranking de mayor a menor puntaje
+        // Ordenar ranking de mayor a menor score
         ranking.sort((a, b) => b.puntos - a.puntos);
 
-        // 3. Seleccionar el cuerpo de la tabla que me mostraste
+        // Renderizar la tabla en el HTML
         const tbody = document.getElementById("tabla-puntuaciones");
-
         if (tbody) {
-          // Vaciamos las filas fijas actuales para meter el nuevo orden
           tbody.innerHTML = "";
-
           ranking.forEach((jugador, indice) => {
-            // Determinar si le toca medalla por estar en el top 3
             let medalla = "";
             if (indice === 0) medalla = "🥇 ";
             else if (indice === 1) medalla = "🥈 ";
             else if (indice === 2) medalla = "🥉 ";
 
-            // Obtener el emoji correspondiente (si no existe, se queda vacío)
             const emoji = emojisAmigos[jugador.nombre] || "";
-
-            // Inyectamos la fila armada dinámicamente con la estructura exacta de tu tabla
             tbody.innerHTML += `
         <tr>
           <td>${medalla}${jugador.nombre} ${emoji}</td>
-          <td style="text-align: right" id="pts-${jugador.nombre}">${jugador.puntos}</td>
+          <td style="text-align: right; font-weight: bold;">${jugador.puntos}</td>
         </tr>
       `;
           });
@@ -1099,9 +1471,14 @@
 
       // 6. INICIALIZADOR ÚNICO DE CARGA
       document.addEventListener("DOMContentLoaded", () => {
+        // 1. Primero resolvemos las dependencias de los equipos (quién va contra quién)
         actualizarPartidosDependientes();
-        generarTorneo();
+
+        // 2. Luego calculamos los puntos de la quiniela basándonos en esos equipos
         calcularPuntos();
+
+        // 3. Al final, pintamos el torneo completo en la pantalla con los datos ya listos
+        generarTorneo();
       });
 
       // 📊 FUNCIÓN COMPLETA CON PORCENTAJES Y LISTA DE AMIGOS
